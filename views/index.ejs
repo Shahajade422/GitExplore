@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css"
+      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script
+      src="https://kit.fontawesome.com/your-fontawesome-kit-id.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .img {
+  border-radius: 50%;
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgb(146, 138, 138);
+  padding: 0.5rem;
+}
+
+.img-div {
+  display: inline-flex;
+  padding-top: 100px;
+  margin-left: 130px;
+}
+
+.nav-bar {
+  margin: 100px;
+}
+
+.profile-info {
+  display: inline-block;
+  padding-left: 60px;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.search-form {
+  margin-right: 15px;
+}
+.navbar {
+  padding-bottom: 20px;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 10px;
+  color: #6c757d;
+  cursor: pointer;
+}
+.github {
+  display: flex;
+  margin-top: 10px;
+  margin-left: 120px;
+  margin-bottom: 50px;
+}
+.location-icon {
+  font-size: 24px;
+  margin-left: 0;
+  padding-left: 2px;
+}
+.info {
+  padding: 0;
+  margin: 5px 0 5px 20px;
+}
+.location {
+  display: inline-flex;
+  margin-bottom: 5px;
+  margin-left: 5px;
+}
+.twitter-icon {
+  margin-left: 0;
+  padding-left: 0;
+}
+.twitter {
+  display: inline-flex;
+  margin-bottom: 5px;
+}
+
+.repository {
+  width: 500px;
+  border: 1.8px solid black;
+  border-radius: 3px;
+  padding-left: 10px;
+  margin-left: 90px;
+  margin-right: 90px;
+  margin-bottom: 20px;
+  display: inline-block;
+}
+
+.repository-skills {
+  display: inline-flex;
+  background-color: #007bff;
+  font-weight: bolder;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  border-radius: 3px;
+  border: 1px solid #007bff;
+  padding: 3px 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.repository-head {
+  color: #007bff;
+}
+
+.github-icon {
+  margin-left: 0;
+  padding-left: 2px;
+  padding-right: 10px;
+}
+
+.pagination {
+  align-items: center;
+  padding: 2px auto 2px auto;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 200px 200px;
+  gap: 1.5rem;
+  align-items: start;
+  align-content: space-around;
+  justify-content: space-around;
+  justify-items: center;
+  min-width: 150px;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination {
+  margin: 0;
+}
+
+.page-item {
+  list-style: none;
+}
+
+.pages {
+  display: flex;
+}
+
+.page-link {
+  color: #007bff;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  padding: 5px 10px;
+  margin: 0 5px;
+}
+
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff; 
+  background-color: #007bff;
+  border-color: #007bff; 
+}
+
+.page-item.disabled .page-link {
+  color: #6c757d; 
+  background-color: #fff; 
+  border-color: #dee2e6; 
+  cursor: not-allowed;
+}
+
+@media (max-width: 1100px) {
+  .container {
+    display: grid;
+    grid-template-columns: 100px;
+  }
+}
+
+.rounded-search-bar {
+  border-radius: 20px; 
+  overflow: hidden; 
+}
+
+.rounded-search-bar input {
+  border: 1px solid; 
+  border-radius: 20px; 
+}
+
+.filter {
+  
+  margin-left: 10% !important;
+}
+  .loader-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  .loader {
+    border: 8px solid #f3f3f3;
+    border-top: 8px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+  }
+
+  #pageList {
+    padding: 5px;
+  }
+  
+  .repo-number{
+    padding-left: 15%;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="/">GitExplore</a>
+
+          <form class="form-inline rounded-search-bar" id="nav-search">
+            <input
+              class="form-control mr-sm-2"
+              type="text"
+              placeholder="Search GitHub user"
+              aria-label="Search"
+              id="navbarSearchInput"
+            />
+          <button
+            class="btn btn-outline-success my-2 my-sm-0"
+            type="button"
+            onclick="redirectToOtherRoute()"
+          >
+            Search
+          </button>
+        </form>
+      </div>
+    </nav>
+    <div class="loader-container">
+      <div class="loader"></div>
+    </div>
+    <div>
+      <div class="img-div">
+        <img class="img" src="<%= userData.avatar_url %>" alt="" />
+      </div>
+      <div class="profile-info">
+        <h2 class="info Name"><%= userData.login %></h2>
+        <% if(userData.bio == null) { %>
+        <p class="info Bio">User bio not available</p>
+        <% } else { %>
+        <p class="info Bio"><%= userData.bio %></p>
+        <% } %>
+        <div class="info">
+          <i class="fa fa-map-marker location-icon" style="font-size: 24px"></i>
+          
+          <% if(userData.location == null) { %>
+            <p class="location">User location not available</p>
+            <% } else { %>
+              <p class="location"><%= userData.location  %></p>
+            <% } %>
+        </div>
+        <div class="info">
+          <i class="fa fa-twitter twitter-icon" style="font-size: 24px"></i>
+          <% if(userData.twitter_username == null) { %>
+            <p class="twitter">User twitter not available</p>
+            <% } else { %>
+              <p class="twitter"><a href="https://twitter.com/<%= userData.twitter_username %>"><%= userData.twitter_username  %></a></p>
+            <% } %>
+        </div>
+      </div>
+    </div>
+    <div class="github">
+      <i class="fa fa-github github-icon" style="font-size: 24px"></i>
+      <div><a href="<%= userData.html_url %>"><%= userData.html_url %></a></div>
+      <div class="filter">
+        <form class="form-inline rounded-search-bar">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Filter by name or skills"
+            aria-label="Filter"
+            id="filterInput"
+            oninput="filterRepositories()"
+          />
+        </form>
+      </div>
+    </div>
+    <div class="container" id="repositoriesContainer">
+      <% for(let i= (Number(page)-1)*Number(num);i<Math.min(repoInfo.length, ((Number(page)-1)*Number(num))+Number(num));i++){ %>
+        <div class="repository">
+      <h1 class="repository-head"><%= repoInfo[i].name %></h1>
+      <p class="repository-info"><%= repoInfo[i].description %></p>
+      <% for (const key in repoInfo[i].languages) { %>
+        <p class="repository-skills"><%= key %></p>
+      <% } %>
+    </div>
+      <% } %>
+  </div>
+
+    <footer>
+      <div class="repo-number">
+        <form class="select-form">
+          <label for="count"></label>
+          <select id="count" name="count">
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="75">75</option>
+            <option value="100">100</option>
+          </select>
+        </form>
+      </div>
+    <div class="pagination-container">
+      <nav aria-label="Page navigation pagination">
+        <ul class="pagination">
+          <li class="page-item">
+            <% if(Number(page)>1){ %>
+            <a class="page-link" href="/userdata/<%= userData.login %>/<%= Number(page)-1 %>/<%= Number(num) %>" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <% } %>
+          </li>
+          <div class="pages">
+            <% let x= repoInfo.length %>
+            <% let noOfPages = x/Number(num) %>
+            <% if(x%Number(num)!==0) noOfPages=noOfPages+1 %>
+            <% for(let i=1;i<=noOfPages;i++){ %>
+              <li id="pageList"><a id="<%= i %>" href="/userdata/<%= userData.login %>/<%= i %>/<%= Number(num) %>" onclick="showLoader()"><%= i %></a></li>
+            <% } %>
+          </div>
+          <li class="page-item">
+          <% if(Number(page)<noOfPages || noOfPages!==1){ %>
+            <a class="page-link" href="/userdata/<%= userData.login %>/<%= Number(page)+1 %>/<%= Number(num) %>" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          <% } %>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    </footer>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"
+      integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
+      integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+      crossorigin="anonymous"
+    ></script>
+    
+    <script>
+      var listItem = document.getElementById("<%= page %>");
+      listItem.style.color = 'orange';
+      document.querySelector("#count").addEventListener("change",(event)=>{
+        const newNumber = event.target.value;
+        showLoader();
+        window.location.href = `/userdata/<%= userData.login %>/1/${newNumber}`;
+      });
+
+function filterRepositories() {
+    const filterInput = document.getElementById("filterInput");
+    const filterText = filterInput.value.toLowerCase();
+
+    const repositoriesContainer = document.getElementById("repositoriesContainer");
+    const repositories = repositoriesContainer.querySelectorAll(".repository");
+
+    repositories.forEach((repo) => {
+      const repoName = repo.querySelector(".repository-head").innerText.toLowerCase();
+      const repoSkillsElements = repo.querySelectorAll(".repository-skills");
+      const repoSkills = Array.from(repoSkillsElements).map((skill) => skill.innerText.toLowerCase());
+
+      const isMatch = repoName.includes(filterText) || repoSkills.some((skill) => skill.includes(filterText));
+
+      if (isMatch) {
+        repo.style.display = "block"; 
+      } else {
+        repo.style.display = "none"; 
+      }
+    });
+  }
+
+  function showLoader() {
+    document.querySelector('.loader-container').style.display = 'flex';
+  }
+
+  function redirectToOtherRoute() {
+      showLoader();
+        const navbarSearchInput = document.getElementById("navbarSearchInput");
+        const username = navbarSearchInput.value.trim();
+        window.location.href = `/userdata/${username}/1/10`;
+      }
+    </script>
+  </body>
+</html>
