@@ -9,9 +9,10 @@ const app = express();
 const PORT = 5500;
 
 app.use(express.json());
+app.set("views", __dirname + "/views");
+app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set("view engine", "ejs");
 const token = process.env.TOKEN;
 
 app.get("/", (req, res) => {
