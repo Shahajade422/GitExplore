@@ -12,12 +12,7 @@ app.use(express.json());
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
-// Fetch user's repositories
 const token = process.env.TOKEN;
-
-// Fetch user's repositories
-
-// // Fetch user's profile
 
 app.get("/", (req, res) => {
   res.render("handle");
@@ -29,7 +24,6 @@ app.get("/userdata/:username/:page/:num", async (req, res) => {
   const num = req.params.num;
 
   try {
-    // Fetch user data
     const userResponse = await axios.get(
       `https://api.github.com/users/${username}`,
       {
@@ -40,7 +34,6 @@ app.get("/userdata/:username/:page/:num", async (req, res) => {
     );
     const userData = userResponse.data;
 
-    // Fetch user repositories
     const userReposResponse = await axios.get(
       `https://api.github.com/users/${username}/repos`,
       {
@@ -51,7 +44,6 @@ app.get("/userdata/:username/:page/:num", async (req, res) => {
     );
     const userRepos = userReposResponse.data;
 
-    // Fetch languages for each repository
     const repoInfoPromises = userRepos.map(async (repo) => {
       const repoLanguagesResponse = await axios.get(
         `https://api.github.com/repos/${username}/${repo.name}/languages`,
@@ -70,10 +62,8 @@ app.get("/userdata/:username/:page/:num", async (req, res) => {
       };
     });
 
-    // Wait for all promises to resolve
     const repoInfo = await Promise.all(repoInfoPromises);
 
-    // Render the EJS template with the data
     res.render("index", { repoInfo, userData, page, num });
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -84,3 +74,5 @@ app.get("/userdata/:username/:page/:num", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`server started on ${PORT}`);
 });
+
+module.exports = app;
