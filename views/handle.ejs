@@ -8,8 +8,211 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
     />
-    <link rel="stylesheet" href="handle.css" />
     <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      nav {
+        background-color: gray;
+        color: white;
+        font-size: 25px;
+        padding: 30px 10px;
+        height: 30px;
+        overflow: hidden;
+        position: relative;
+        transition: height 1.5s ease-in-out, background-color 2s ease-in-out,
+          font-size 2s ease-in-out;
+      }
+
+      nav:hover {
+        height: 80px;
+        background-color: #e2e2e2;
+        font-size: 20px;
+      }
+
+      nav a {
+        display: inline-block;
+        color: white;
+        text-decoration: none;
+        transition: transform 3s ease-in-out, color 2s ease-in-out;
+      }
+
+      nav:hover a {
+        color: #000000;
+      }
+
+      .line {
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        height: 1px;
+        background-color: #000000;
+        transform-origin: 0 0;
+        transform: scaleX(0);
+        transition: transform 1s ease-in-out;
+      }
+
+      .message {
+        position: absolute;
+        bottom: -20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 14px;
+        color: #000000;
+        opacity: 1;
+        transition: opacity 0.5s ease-in-out;
+      }
+
+      nav:hover .line {
+        transform: scaleX(1);
+      }
+
+      .nav-link:hover + .line,
+      .nav-link:hover + .line + .message {
+        opacity: 1;
+      }
+
+      .main-nav {
+        text-align: center;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.8);
+        position: relative;
+      }
+
+      #searchForm {
+        overflow: hidden;
+      }
+
+      #searchArea {
+        margin-top: 100px;
+        margin-bottom: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        width: 300px;
+        height: 40px;
+        overflow: hidden;
+        border-radius: 20px;
+        transition: width 1s ease-in-out;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+      }
+
+      #searchArea:hover {
+        width: 400px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      }
+
+      #searchInput {
+        flex: 1;
+        height: 100%;
+        padding: 8px;
+        font-size: 16px;
+        border: none;
+        border-radius: 20px 0 0 20px;
+        outline: none;
+      }
+
+      #searchButton {
+        opacity: 0;
+        padding: 8px;
+        font-size: 16px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 0 20px 20px 0;
+        cursor: pointer;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      #searchArea:hover #searchButton {
+        opacity: 1;
+      }
+
+      #searchButton:hover {
+        background-color: #45a049;
+      }
+
+      main {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        padding: 20px;
+      }
+
+      .content {
+        border: 2px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        width: 300px;
+        margin: 10px;
+        text-align: left;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      }
+
+      .content:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .content-title {
+        color: #333;
+        font-size: 1.5em;
+      }
+
+      .content-para {
+        color: black;
+      }
+
+      @media (max-width: 600px) {
+        main {
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .content {
+          width: 80%;
+        }
+      }
+
+      footer {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 15px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+      }
+
+      .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .personal-details,
+      .social-media {
+        flex: 1;
+      }
+
+      .social-media a {
+        margin-right: 10px;
+        color: white;
+        font-size: 20px;
+        transition: color 0.3s ease-in-out;
+      }
+
+      .social-media a:hover {
+        color: #55acee;
+      }
+
       .loader-container {
         display: none;
         position: fixed;
