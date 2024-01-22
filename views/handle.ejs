@@ -115,6 +115,9 @@
         border: none;
         border-radius: 20px 0 0 20px;
         outline: none;
+        margin: 0;
+        padding: 0 2px 0 8px;
+        /* padding-bottom: 10px; */
       }
 
       #searchButton {
@@ -316,10 +319,66 @@
 
     <script>
       function redirectToOtherRoute() {
-        showLoader();
         const navbarSearchInput = document.getElementById("searchInput");
         const username = navbarSearchInput.value.trim();
+
+        if (username.length === 0) {
+          console.error("Error: Please enter a valid username.");
+
+          const { errorDiv, overlayDiv } = showErrorMessage(
+            "Please enter a valid username."
+          );
+          function removeErrorMessage() {
+            errorDiv.remove();
+            overlayDiv.remove();
+            document.removeEventListener("click", removeErrorMessage);
+          }
+          setTimeout(() => {
+            document.addEventListener("click", removeErrorMessage);
+          });
+
+          return;
+        } else {
+          showLoader();
+        }
+
+        console.log(username);
         window.location.href = `/userdata/${username}/1/10`;
+      }
+
+      function showErrorMessage(message) {
+        // Create an overlay div for background opacity
+        const overlayDiv = document.createElement("div");
+        overlayDiv.style.position = "fixed";
+        overlayDiv.style.top = "0";
+        overlayDiv.style.left = "0";
+        overlayDiv.style.width = "100%";
+        overlayDiv.style.height = "100%";
+        overlayDiv.style.background = "rgba(0, 0, 0, 0.5)";
+        overlayDiv.style.zIndex = "9998";
+        const errorDiv = document.createElement("div");
+        errorDiv.textContent = message;
+        errorDiv.style.color = "red";
+        errorDiv.style.fontSize = "18px";
+        errorDiv.style.position = "fixed";
+        errorDiv.style.top = "50%";
+        errorDiv.style.left = "50%";
+        errorDiv.style.transform = "translate(-50%, -50%)";
+        errorDiv.style.padding = "20px";
+        errorDiv.style.background = "#fff";
+        errorDiv.style.border = "2px solid red";
+        errorDiv.style.zIndex = "9999";
+        errorDiv.style.width = "500px";
+        errorDiv.style.height = "100px";
+        errorDiv.style.opacity = "0";
+        errorDiv.style.transition = "opacity .5s ease-in";
+
+        document.body.appendChild(overlayDiv);
+        document.body.appendChild(errorDiv);
+        errorDiv.offsetHeight;
+        errorDiv.style.opacity = "1";
+
+        return { errorDiv, overlayDiv };
       }
 
       document

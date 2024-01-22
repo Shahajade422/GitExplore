@@ -133,25 +133,25 @@
 
     .repository {
       width: 550px;
-      height: 150px;
+      height: 180px;
       border: 1px solid rgb(0, 0, 0,.5) ;
       border-radius: 3px;
       display: inline-block;
       padding: 16px;
+      min-width: 150px;
     }
 
     .repository-skills {
       display: inline-flex;
       background-color: #007bff;
-      font-weight: bolder;
+      font-size: .8em;
       font-family: Arial, Helvetica, sans-serif;
       color: white;
-      border-radius: 3px;
+      border-radius: .5rem;
       border: 1px solid #007bff;
       padding: 3px 5px;
       margin-left: 2px;
       margin-right: 2px;
-      max-width: 100%;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -338,10 +338,18 @@
       <% for(let i= (Number(page)-1)*Number(num);i<Math.min(repoInfo.length, ((Number(page)-1)*Number(num))+Number(num));i++){ %>
         <div class="repository">
       <h1 class="repository-head"><%= repoInfo[i].name %></h1>
-      <p class="repository-info"><%= repoInfo[i].description %></p>
+      <% if(repoInfo[i].description!==null){ %>
+        <p class="repository-info"> <%= repoInfo[i].description %></p>
+        <% } else { %>
+          <p class="repository-info">No description available</p>
+          <% } %>
+         <% if(Object.values(repoInfo[i].languages).length !== 0){ %>
       <% for (const key in repoInfo[i].languages) { %>
         <p class="repository-skills"><%= key %></p>
       <% } %>
+      <% } else { %>
+        <p >No Language available</p>
+       <% } %>
     </div>
       <% } %>
   </div>
@@ -351,12 +359,12 @@
         <form class="select-form">
           <label for="count"></label>
           <select id="count" name="count">
-            <option value="5">5</option>
-            <option value="10" selected>10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-            <option value="75">75</option>
-            <option value="100">100</option>
+            <option id = "5" value="5">5</option>
+            <option id="10" value="10" >10</option>
+            <option id="20" value="20">20</option>
+            <option id ="50" value="50">50</option>
+            <option id="75" value="75">75</option>
+            <option id="100" value="100">100</option>
           </select>
         </form>
       </div>
@@ -365,7 +373,7 @@
         <ul class="pagination">
           <li class="page-item">
             <% if(Number(page)>1){ %>
-            <a class="page-link" href="/userdata/<%= userData.login %>/<%= Number(page)-1 %>/<%= Number(num) %>" aria-label="Previous">
+            <a class="page-link" onclick="showLoader()" href="/userdata/<%= userData.login %>/<%= Number(page)-1 %>/<%= Number(num) %>" aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
               <span class="sr-only">Previous</span>
             </a>
@@ -381,7 +389,7 @@
           </div>
           <li class="page-item">
           <% if(Number(page)<noOfPages || noOfPages!==1){ %>
-            <a class="page-link" href="/userdata/<%= userData.login %>/<%= Number(page)+1 %>/<%= Number(num) %>" aria-label="Next">
+            <a class="page-link" onclick="showLoader()" href="/userdata/<%= userData.login %>/<%= Number(page)+1 %>/<%= Number(num) %>" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
               <span class="sr-only">Next</span>
             </a>
@@ -408,6 +416,8 @@
     ></script>
     
     <script>
+      var option = document.getElementById("<%= num %>");
+      option.selected = true;
       var listItem = document.getElementById("<%= page %>");
       listItem.style.color = 'orange';
       document.querySelector("#count").addEventListener("change",(event)=>{
@@ -443,12 +453,93 @@ function filterRepositories() {
   }
 
   function redirectToOtherRoute() {
+    showLoader();
+    const navbarSearchInput = document.getElementById("navbarSearchInput");
+    const username = navbarSearchInput.value.trim();
+
+    if (username.length === 0) {
+        // Display an error message or take appropriate action for an empty input
+        console.error("Error: Please enter a valid username.");
+
+        // Show a div with an error message on the entire page
+        showErrorMessage("Please enter a valid username.");
+
+        return;
+    }
+
+    console.log(username);
+    window.location.href = `/userdata/${username}/1/10`;
+}
+
+function redirectToOtherRoute() {
+    const navbarSearchInput = document.getElementById("navbarSearchInput");
+    const username = navbarSearchInput.value.trim();
+
+    if (username.length === 0) {
+        // Display an error message or take appropriate action for an empty input
+        console.error("Error: Please enter a valid username.");
+
+        // Show a div with an error message on the entire page
+        const { errorDiv, overlayDiv } = showErrorMessage("Please enter a valid username.");
+
+        // Set up click event listener to remove the error div and overlay on click anywhere on the page
+        function removeErrorMessage() {
+            errorDiv.remove();
+            overlayDiv.remove();
+            document.removeEventListener("click", removeErrorMessage);
+        }
+
+        // Add a delay to ensure the click event listener is set up after the current event loop
+        setTimeout(() => {
+            document.addEventListener("click", removeErrorMessage);
+        });
+
+        return;
+    }
+    else{
       showLoader();
-        const navbarSearchInput = document.getElementById("navbarSearchInput");
-        const username = navbarSearchInput.value.trim();
-        window.location.href = `/userdata/${username}/1/10`;
-      }
+    }
+
+    console.log(username);
+    window.location.href = `/userdata/${username}/1/10`;
+}
+
+function showErrorMessage(message) {
+    const overlayDiv = document.createElement("div");
+    overlayDiv.style.position = "fixed";
+    overlayDiv.style.top = "0";
+    overlayDiv.style.left = "0";
+    overlayDiv.style.width = "100%";
+    overlayDiv.style.height = "100%";
+    overlayDiv.style.background = "rgba(0, 0, 0, 0.5)"; 
+    overlayDiv.style.zIndex = "9998"; 
+
+    const errorDiv = document.createElement("div");
+    errorDiv.textContent = message;
+    errorDiv.style.color = "red";
+    errorDiv.style.fontSize = "18px";
+    errorDiv.style.position = "fixed";
+    errorDiv.style.top = "50%";
+    errorDiv.style.left = "50%";
+    errorDiv.style.transform = "translate(-50%, -50%)";
+    errorDiv.style.padding = "20px";
+    errorDiv.style.background = "#fff";
+    errorDiv.style.border = "2px solid red";
+    errorDiv.style.zIndex = "9999";
+    errorDiv.style.width = "500px";
+    errorDiv.style.height = "100px";
+
+    errorDiv.style.opacity = "0";
+    errorDiv.style.transition = "opacity .5s ease-in";
+
+    document.body.appendChild(overlayDiv);
+    document.body.appendChild(errorDiv);
+    errorDiv.offsetHeight;
+    errorDiv.style.opacity = "1";
+
+    return { errorDiv, overlayDiv };
+}
+
     </script>
   </body>
 </html>
-make it responsive by changing its CSS

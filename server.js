@@ -3,6 +3,7 @@ const express = require("express");
 const ejs = require("ejs");
 const dirname = require("path");
 const bodyParser = require("body-parser");
+const { log } = require("console");
 
 require("dotenv").config();
 const app = express();
@@ -23,8 +24,8 @@ app.get("/userdata/:username/:page/:num", async (req, res) => {
   const username = req.params.username;
   const page = req.params.page;
   const num = req.params.num;
-  console.log(username);
-  if (username == null) {
+  if (username.length == 0) {
+    console.log("SHAHAJADE");
     res.render("errorpage");
   }
 
@@ -59,7 +60,6 @@ app.get("/userdata/:username/:page/:num", async (req, res) => {
         }
       );
       const repoLanguages = repoLanguagesResponse.data;
-
       return {
         name: repo.name,
         description: repo.description,
