@@ -23,6 +23,10 @@ app.get("/userdata/:username/:page/:num", async (req, res) => {
   const username = req.params.username;
   const page = req.params.page;
   const num = req.params.num;
+  console.log(username);
+  if (username == null) {
+    res.render("errorpage");
+  }
 
   try {
     const userResponse = await axios.get(

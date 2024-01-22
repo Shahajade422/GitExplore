@@ -4,6 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Your Page Title</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
     <link rel="stylesheet" href="handle.css" />
     <style>
       .loader-container {
@@ -40,8 +44,10 @@
   </head>
   <body>
     <div class="navigation">
-      <nav>
-        <a href="/">GitExplore</a>
+      <nav class="main-nav">
+        <a href="/" class="nav-link">GitExplore</a>
+        <div class="line"></div>
+        <div class="message" id="userMessage">Hello User</div>
       </nav>
     </div>
     <div class="loader-container">
@@ -49,28 +55,62 @@
     </div>
     <form id="searchForm">
       <div id="searchArea">
-        <input type="text" id="searchInput" placeholder="GitHub account" />
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Enter GitHub account"
+        />
         <button id="searchButton" type="submit">Search</button>
       </div>
     </form>
 
     <main>
       <div class="content">
-        <h2>Title 1</h2>
-        <p>Random words for the first paragraph.</p>
+        <h2 class="content-title">Get Started</h2>
+        <p class="content-para">Input a GitHub username</p>
+        <p class="content-para">Investigate user's profile details</p>
+        <p class="content-para">Examine repositories for coding languages</p>
+        <p class="content-para">Utilize the filter bar for precision</p>
       </div>
 
       <div class="content">
-        <h2>Title 2</h2>
-        <p>More random words for the second paragraph.</p>
+        <h2 class="content-title">Key Features</h2>
+        <p class="content-para">Lookup User Profile</p>
+        <p class="content-para">Insight into Repositories</p>
+        <p class="content-para">Repositories Filtering</p>
       </div>
 
       <div class="content">
-        <h2>Title 3</h2>
-        <p>Additional random words for the third paragraph.</p>
+        <h2 class="content-title">Why GitExplore?</h2>
+        <p class="content-para">Discover with Ease</p>
+        <p class="content-para">User-Centric Design</p>
+        <p class="content-para">In-Depth Insights</p>
+        <p class="content-para">Efficient Time Management</p>
       </div>
     </main>
-    <footer>Created by Shahajade &copy; <span id="currentYear"></span></footer>
+    <footer>
+      <div class="footer-content">
+        <div class="personal-details">
+          <p>Created by Shahajade &copy; <span id="currentYear"></span></p>
+          <p>Email: shahajade.student.cer20@gmail.com</p>
+        </div>
+        <div class="social-media">
+          <a
+            href="https://twitter.com/shahajade"
+            target="_blank"
+            title="Twitter"
+            ><i class="fab fa-twitter"></i
+          ></a>
+          <a
+            href="https://www.instagram.com/shahajade__"
+            target="_blank"
+            title="Instagram"
+            ><i class="fab fa-instagram"></i
+          ></a>
+        </div>
+      </div>
+    </footer>
+
     <script>
       function redirectToOtherRoute() {
         showLoader();
@@ -89,6 +129,28 @@
       function showLoader() {
         document.querySelector(".loader-container").style.display = "flex";
       }
+
+      function toggleNavbarHeight() {
+        const navigation = document.querySelector(".navigation");
+        const line = document.querySelector(".line");
+        const message = document.querySelector(".message");
+
+        navigation.classList.toggle("hovered");
+
+        if (navigation.classList.contains("hovered")) {
+          line.style.transform = "scaleX(1)";
+          message.style.opacity = "1";
+        } else {
+          line.style.transform = "scaleX(0)";
+          message.style.opacity = "0";
+        }
+      }
+
+      const navigation = document.querySelector(".navigation");
+      navigation.addEventListener("mouseenter", toggleNavbarHeight);
+      navigation.addEventListener("mouseleave", toggleNavbarHeight);
+      document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
     </script>
   </body>
 </html>
